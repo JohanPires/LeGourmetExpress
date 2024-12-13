@@ -1,15 +1,16 @@
 import mysql.connector
-
-
 def connect_db():
     conn = mysql.connector.connect(
         host="localhost",
         user="root",
-        port=8889,
         password="root",
-        database="gourmet_db"
+        database="Gourmet_db"
     )
     return conn
+
+
+conn = connect_db()
+cursor = conn.cursor()
 
 
 # cursor.execute("""
@@ -20,17 +21,6 @@ def connect_db():
 #         price INT
 #     );
 #             """)
-<<<<<<< HEAD
-# cursor.execute("""
- #   CREATE TABLE plats_ingredients (
-  #      plat_id INT,
-  #      ingredient_id INT,
-  #      PRIMARY KEY (plat_id, ingredient_id),
-  #      FOREIGN KEY (plat_id) REFERENCES plats(id) ON DELETE CASCADE,
-  #      FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
-  #  );
-  #                         """)
-=======
 
 # cursor.execute("""
 #     CREATE TABLE plats_ingredients (
@@ -41,7 +31,6 @@ def connect_db():
 #         FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
 #     );
 #                            """)
->>>>>>> 25fabe526dcec69aab15e58393a8a3feb9dbc92b
 
 # cursor.execute("""
 # CREATE TABLE commandes (

@@ -3,20 +3,21 @@ from settings import connect_db
 conn = connect_db()
 cursor = conn.cursor()
 
-
-cursor.execute(""" 
-    CREATE TABLE ingredients IF NOT EXISTS(
-               id INT AUTO_INCREMENT PRIMARY KEY,
-               name VARCHAR(50),
-               quantity INT
-               )
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS ingredients (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50),
+        stock INT
+    );
             """)
-conn.commit()
 
-# ------------ Classe ---------------#
+class Ingredient:
+    
+    def get_ingredient():
+        cursor.execute('SELECT * FROM ingredients')
+        resultats = cursor.fetchall()
+        for book in resultats:
+            print(book)
 
 
-class ingredient:
-    def __init__(self, name, quantity):
-        self.name = name
-        self.quantity = quantity
+
