@@ -1,4 +1,6 @@
 import mysql.connector
+
+
 def connect_db():
     conn = mysql.connector.connect(
         host="localhost",
@@ -9,9 +11,6 @@ def connect_db():
     return conn
 
 
-conn = connect_db()
-cursor = conn.cursor()
-
 # cursor.execute("""
 #     CREATE TABLE plats IF NOT EXISTS (
 #         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,16 +19,15 @@ cursor = conn.cursor()
 #         price INT
 #     );
 #             """)
-
-cursor.execute("""
-    CREATE TABLE plats_ingredients (
-        plat_id INT,
-        ingredient_id INT,
-        PRIMARY KEY (plat_id, ingredient_id),
-        FOREIGN KEY (plat_id) REFERENCES plats(id) ON DELETE CASCADE,
-        FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
-    );
-                           """)
+# cursor.execute("""
+ #   CREATE TABLE plats_ingredients (
+  #      plat_id INT,
+  #      ingredient_id INT,
+  #      PRIMARY KEY (plat_id, ingredient_id),
+  #      FOREIGN KEY (plat_id) REFERENCES plats(id) ON DELETE CASCADE,
+  #      FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
+  #  );
+  #                         """)
 
 # cursor.execute("""
 # CREATE TABLE commandes (
