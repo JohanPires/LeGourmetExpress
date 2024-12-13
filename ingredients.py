@@ -15,6 +15,7 @@ cursor = conn.cursor()
 class Ingredient:
     # def init():
 
+
     # def add_product():
     #     cursor.execute("""
     #         INSERT INTO products (name, custom, price)
@@ -38,3 +39,4 @@ class Ingredient:
 
     get_ingredients()
     update_ingredients()
+

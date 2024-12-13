@@ -1,15 +1,16 @@
 import mysql.connector
-
-
 def connect_db():
     conn = mysql.connector.connect(
         host="localhost",
         user="root",
-        port=8889,
         password="root",
-        database="gourmet_db"
+        database="Gourmet_db"
     )
     return conn
+
+
+conn = connect_db()
+cursor = conn.cursor()
 
 
 # cursor.execute("""
