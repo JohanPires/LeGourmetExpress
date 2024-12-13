@@ -1,10 +1,6 @@
-from commands import commands as cmd
-from settings import connect_db
+from products import Product
 
-conn = connect_db()
-cursor = conn.cursor()
+# Product.get_products()
+# Product.get_one_product('coca')
+Product.get_product_with_ingredients('coca')
 
-def main(cursor, conn):
-    cmd(cursor, conn)
-
-main(cursor, conn)

@@ -12,6 +12,7 @@ def connect_db():
 conn = connect_db()
 cursor = conn.cursor()
 
+
 # cursor.execute("""
 #     CREATE TABLE plats IF NOT EXISTS (
 #         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,6 +21,7 @@ cursor = conn.cursor()
 #         price INT
 #     );
 #             """)
+
 
 # cursor.execute("""
 #     CREATE TABLE plats_ingredients (
