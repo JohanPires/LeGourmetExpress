@@ -29,7 +29,7 @@ def menu_command(cursor, conn):
     print("6. Exit")
     choice = input("Enter your choice: ")
     if choice == "1":
-        create_command(cursor, conn)
+    #     create_command(cursor, conn)
     # elif choice == "2":
     #     update_command(cursor, conn)
     # elif choice == "4":
