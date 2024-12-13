@@ -3,29 +3,9 @@ from settings import connect_db
 conn = connect_db()
 cursor = conn.cursor()
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS products (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        custom BOOLEAN,
-        name VARCHAR(50),
-        price DOUBLE
-    );
-            """)
-
-
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS product_ingredients (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        products_id INT,
-        ingredients_id INT,
-        FOREIGN KEY (products_id) REFERENCES products(id) ON DELETE CASCADE,
-        FOREIGN KEY (ingredients_id) REFERENCES ingredients(id) ON DELETE CASCADE
-    );
-            """)
-
 
 class Product:
-       
+
     def add_product(name, custom, price):
         cursor.execute("""
             INSERT INTO products (name, custom, price) 
@@ -37,11 +17,12 @@ class Product:
         cursor.execute('SELECT * FROM products')
         resultats = cursor.fetchall()
         for product in resultats:
-            if(product[1] == 0):
+            if (product[1] == 0):
                 print(product)
 
     def get_one_product(name):
-        cursor.execute('SELECT * FROM products WHERE name = %s and custom = 0', (name,))
+        cursor.execute(
+            'SELECT * FROM products WHERE name = %s and custom = 0', (name,))
         resultats = cursor.fetchall()
         for product in resultats:
             print(product)
@@ -64,6 +45,3 @@ class Product:
         resultats = cursor.fetchall()
         for product in resultats:
             print(product)
-
-    
-    
