@@ -22,11 +22,11 @@ class Ingredient:
     #         """, ('coca', False, 20))
     #     conn.commit()
 
-    def get_ingredient():
+    def get_ingredients():
         cursor.execute('SELECT * FROM ingredients')
         resultats = cursor.fetchall()
-        for book in resultats:
-            print(book)
+        for ingredient in resultats:
+            print(ingredient)
 
     def update_ingredients(id):
         cursor.execute("SELECT stock FROM ingredients WHERE id = %s", (id))
