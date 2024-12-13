@@ -22,6 +22,7 @@ cursor = conn.cursor()
 #     );
 #             """)
 
+
 # cursor.execute("""
 #     CREATE TABLE plats_ingredients (
 #         plat_id INT,
