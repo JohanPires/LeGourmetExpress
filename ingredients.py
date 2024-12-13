@@ -21,4 +21,3 @@ class Ingredient:
 
 
 
-    get_ingredient()
