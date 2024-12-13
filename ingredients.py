@@ -36,5 +36,5 @@ class Ingredient:
             "UPDATE ingredients SET stock = %s WHERE id = %s", (new_count, id))
         conn.commit()
 
-    get_ingredient()
+    get_ingredients()
     update_ingredients()
