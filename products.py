@@ -38,7 +38,8 @@ class Product:
         resultats = cursor.fetchall()
         for product in resultats:
             if(product[1] == 0):
-                print(product)
+                print(f'{product[0]}: {product[2]}')
+  
 
     def get_one_product(name):
         cursor.execute('SELECT * FROM products WHERE name = %s and custom = 0', (name,))
@@ -55,15 +56,29 @@ class Product:
 
     def get_product_with_ingredients(name):
         cursor.execute("""
-            SELECT p.id, p.name, p.custom, p.price, i.name AS ingredient_name
+            SELECT 
+                p.id, 
+                p.name, 
+                p.custom, 
+                p.price, 
+                GROUP_CONCAT(i.name SEPARATOR ', ') AS ingredients
             FROM products p
             LEFT JOIN product_ingredients pi ON p.id = pi.products_id
             LEFT JOIN ingredients i ON pi.ingredients_id = i.id
             WHERE p.name = %s
-        """, (name,))
+            GROUP BY p.id, p.name, p.custom, p.price
+            """, (name,))
         resultats = cursor.fetchall()
-        for product in resultats:
-            print(product)
+        print(f'{resultats[0][1]} :') 
+        print(resultats)
+        array = resultats[0][4].split(', ')
+        
+        for ingredient in array : 
+            print(ingredient)
+        # custom = input("Valider la commande ou modifier un ingédients (Oui ou nom d'un ingrédients)")
+        # if(custom == 'oui'):
+    
+        
 
     
     
