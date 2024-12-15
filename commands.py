@@ -1,5 +1,6 @@
 from settings import connect_db
 from products import Product
+import datetime
 
 conn = connect_db()
 cursor = conn.cursor()
@@ -64,7 +65,7 @@ class Command:
             WHERE cp.command_id = %s
             """, (command_id,))
         result = cursor.fetchone()
-        print(result[0]) 
+        print(f"Le total de la commande est de {result[0]}€.") 
 
     def save(client_name, status, total_price):
         cursor.execute("""
@@ -79,17 +80,38 @@ class Command:
         for command in resultats:
             print(command)
 
+    def get_waiting_commands():
+        cursor.execute('SELECT * FROM commands WHERE status LIKE "waiting"')
+        resultats = cursor.fetchall()
+        for command in resultats:
+            print(command)
+
     def get_one_command_with_products(id):
         cursor.execute("""
-            SELECT c.id, c.client_name, c.status, c.created_at, c.total_price, p.name, cp.quantity
+            SELECT c.client_name, c.status, c.created_at, c.total_price, p.name, cp.quantity
             FROM commands c
             LEFT JOIN command_products cp ON c.id = cp.command_id
             LEFT JOIN products p ON cp.product_id = p.id
             WHERE c.id = %s
             """, (id,))
-        resultats = cursor.fetchall()
-        for command in resultats:
-            print(command)
+        
+        command_details = cursor.fetchall()
+    
+        if not command_details:
+            print("Commande non trouvée.")
+            return
+        
+        print(command_details)
+        print(f"Commande de {command_details[0][0]} passée à {command_details[0][2].strftime("%d/%m/%Y %H:%M")}")
+        print(f"Statut : {command_details[0][1]}")
+        print(f"Prix total : {command_details[0][3]}")
+        print("Produits :")
+
+        for detail in command_details:
+            product_name = detail[4]
+            quantity = detail[5]
+            print(f" - {quantity} {product_name}")
+
 
    
 def command_nav():

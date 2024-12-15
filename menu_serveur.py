@@ -37,6 +37,7 @@ def menu_serveur():
                 Command.add_product_to_command(int(command_id), int(product_id), int(quantity))               
                 add_product = input("Voulez-vous ajouter un produit? Oui ou non?")
                 if (add_product == "non"):
+                    Command.calculate_total_price(command_id)
                     return False
               
             

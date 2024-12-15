@@ -9,8 +9,8 @@ cursor = conn.cursor()
 def menu_cuisinier():
     while True:
         print("\n--- Menu Cuisinier---")
-        # print("1. Accéder aux commandes")
-        # print("2. Lire les commandes")
+        print("1. Accéder à toutes les commandes")
+        print("2. Lire le détail d'une commande en cours")
         # print("3. Mettre à jour une commande")
         # print("4. Créer un produit")
         print("5. Lire les produits")
@@ -18,7 +18,13 @@ def menu_cuisinier():
         print("7. Quitter")
 
         choix = input("Choisissez une option : ")
-        if choix == "5":
+        if choix == "1":
+            Command.get_commands()
+        elif choix == "2":
+            Command.get_waiting_commands()
+            command_id = input("Choisissez le numéro de commande que vous souhaitez consulter : ")
+            Command.get_one_command_with_products(command_id)
+        elif choix == "5":
             Product.get_products()
             product_id = input("Choisissez le numéro du produit que vous souhaitez consulter : ")
             Product.get_product_with_ingredients(product_id)
