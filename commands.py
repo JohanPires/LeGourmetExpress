@@ -65,7 +65,14 @@ class Command:
             WHERE cp.command_id = %s
             """, (command_id,))
         result = cursor.fetchone()
-        print(f"Le total de la commande est de {result[0]}€.") 
+        price = result[0]
+        print(f"Le total de la commande est de {price}€.") 
+        cursor.execute("""
+                       UPDATE commands 
+                       SET total_price = %s 
+                       WHERE id = %s""", 
+                       (price, command_id))
+        conn.commit()
 
     def save(client_name, status, total_price):
         cursor.execute("""
