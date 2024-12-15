@@ -69,7 +69,7 @@ class Product:
             GROUP BY p.id, p.name, p.custom, p.price
             """, (id,))
         resultats = cursor.fetchall()
-        print(f'{resultats[0][1]} :') 
+        print(f'Le produit {resultats[0][1]} est constitué de :') 
         # print(resultats)
         array = resultats[0][4].split(', ')
         

@@ -11,10 +11,10 @@ def menu_cuisinier():
         print("\n--- Menu Cuisinier---")
         print("1. Accéder à toutes les commandes")
         print("2. Lire le détail d'une commande en cours")
-        # print("3. Mettre à jour une commande")
+        print("3. Mettre à jour une commande")
         # print("4. Créer un produit")
         print("5. Lire les produits")
-        print("6. Lire les ingrédients")
+        print("6. Consulter les ingrédients et les stocks")
         print("7. Quitter")
 
         choix = input("Choisissez une option : ")
@@ -24,6 +24,14 @@ def menu_cuisinier():
             Command.get_waiting_commands()
             command_id = input("Choisissez le numéro de commande que vous souhaitez consulter : ")
             Command.get_one_command_with_products(command_id)
+        elif choix == "3":
+            Command.get_commands()
+            command_id = input("Choisissez le numéro de commande que vous souhaitez modifier : ")
+            ready = input("Cette commande est-elle prête? Oui ou non? ")
+            if ready == "oui":
+                # Appeler une fonction de mise à jour du statut de la commande
+                Command.update_command_status(command_id, "ready")
+                print(f"La commande n°{command_id} a bien été mise à jour.")
         elif choix == "5":
             Product.get_products()
             product_id = input("Choisissez le numéro du produit que vous souhaitez consulter : ")

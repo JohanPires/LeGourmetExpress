@@ -4,32 +4,6 @@ import datetime
 
 conn = connect_db()
 cursor = conn.cursor()
-class Status:
-    WAITING = "waiting"
-    COOKING = "cooking"
-    CONFIRMED = "confirmed"
-    CANCELED = "canceled"
-    UNKNOWN = "unknown"
-    
-    def select_status():
-        print("1. Waiting")
-        print("2. Cooking")
-        print("3. Confirmed")
-        print("4. Canceled")
-        print("5. Unknown")
-        choice = input("Enter status: ")
-        if choice == "1":
-            return Status.WAITING
-        elif choice == "2":
-            return Status.COOKING
-        elif choice == "3":
-            return Status.CONFIRMED
-        elif choice == "4":
-            return Status.CANCELED
-        elif choice == "5":
-            return Status.UNKNOWN
-        else:
-            return Status.UNKNOWN
 
 
 class Command:
@@ -118,3 +92,12 @@ class Command:
             product_name = detail[4]
             quantity = detail[5]
             print(f" - {quantity} {product_name}")
+
+    def update_command_status(id, status):
+        cursor.execute("""
+                       UPDATE commands 
+                       SET status = %s 
+                       WHERE id = %s""", 
+                       (status, id))
+        conn.commit()
+
