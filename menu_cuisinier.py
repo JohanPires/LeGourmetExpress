@@ -14,14 +14,13 @@ def menu_cuisinier():
         # print("3. Mettre à jour une commande")
         # print("4. Créer un produit")
         print("5. Lire les produits")
-        # print("6. Lire les ingrédients")
+        print("6. Lire les ingrédients")
         print("7. Quitter")
 
         choix = input("Choisissez une option : ")
         if choix == "5":
             Product.get_products()
             product_id = input("Choisissez le numéro du produit que vous souhaitez consulter : ")
-    # afficher le produit selectionné via l'id entré par le cuisiner
             Product.get_product_with_ingredients(product_id)
     # update_status = input(
         # "Indique à tous que tu cuisines ces plats avec le statut 'cooking' : ")
@@ -29,6 +28,8 @@ def menu_cuisinier():
     # récupérer la liste des ingrédients présents dans get_product_with_ingredient
     # boucle pour la MAJ du stock des ingredients
     # Ingredient.update_ingredients(id)
+        elif choix == "6":
+            Ingredient.get_ingredients()
         elif choix == "7":
             print("Retour au menu principal...")
             break

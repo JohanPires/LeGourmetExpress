@@ -27,7 +27,7 @@ class Ingredient:
         cursor.execute('SELECT * FROM ingredients')
         resultats = cursor.fetchall()
         for ingredient in resultats:
-            print(ingredient)
+            print(f"{ingredient[1]}, stock actuel: {ingredient[2]}")
 
     def update_ingredients(id):
         cursor.execute("SELECT stock FROM ingredients WHERE id = %s", (id))
