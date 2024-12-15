@@ -5,7 +5,7 @@ def connect_db():
         user="root",
         password="root",
         database="Gourmet_db",
-        port=8889
+        # port=8889
     )
     return conn
 

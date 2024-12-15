@@ -1,5 +1,5 @@
 from menu_serveur import menu_serveur
-
+from menu_cuisinier import menu_cuisinier
 
 
 def principal():
@@ -12,9 +12,9 @@ def principal():
         choix = input("Choisissez une option : ")
 
         if choix == "1":
-            menu_serveur()  # Appeler directement le menu serveur
-       
-        
+            menu_serveur()
+        elif choix == "2":
+            menu_cuisinier() 
         elif choix == "3":
             print("Au revoir !")
             break

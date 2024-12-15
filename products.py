@@ -54,7 +54,7 @@ class Product:
             """, (name, custom, price))
         conn.commit()
 
-    def get_product_with_ingredients(name):
+    def get_product_with_ingredients(id):
         cursor.execute("""
             SELECT 
                 p.id, 
@@ -65,12 +65,12 @@ class Product:
             FROM products p
             LEFT JOIN product_ingredients pi ON p.id = pi.products_id
             LEFT JOIN ingredients i ON pi.ingredients_id = i.id
-            WHERE p.name = %s
+            WHERE p.id = %s
             GROUP BY p.id, p.name, p.custom, p.price
-            """, (name,))
+            """, (id,))
         resultats = cursor.fetchall()
         print(f'{resultats[0][1]} :') 
-        print(resultats)
+        # print(resultats)
         array = resultats[0][4].split(', ')
         
         for ingredient in array : 
