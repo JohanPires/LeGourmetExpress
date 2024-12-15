@@ -85,13 +85,13 @@ class Command:
         cursor.execute('SELECT * FROM commands')
         resultats = cursor.fetchall()
         for command in resultats:
-            print(command)
+            print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
 
     def get_waiting_commands():
         cursor.execute('SELECT * FROM commands WHERE status LIKE "waiting"')
         resultats = cursor.fetchall()
         for command in resultats:
-            print(command)
+            print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
 
     def get_one_command_with_products(id):
         cursor.execute("""
@@ -118,32 +118,3 @@ class Command:
             product_name = detail[4]
             quantity = detail[5]
             print(f" - {quantity} {product_name}")
-
-
-   
-def command_nav():
-    while True:
-        print("1. Create command")
-        print("2. Show all commands")
-        print("3. Show one command with products")
-        print("4. Exit")
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            input_client_name = input("Enter client name: ")
-            input_status = Status.select_status()
-            input_created_at = input("Enter created at: ")
-            input_total_price = input("Enter total price: ")
-            command = Command(input_client_name, input_status, input_created_at, input_total_price)
-            command.save()
-
-        elif choice == "2":
-            Command.get_commands()
-        elif choice == "3":
-            id = input("Enter command id: ")
-            Command.get_one_command_with_products(id)
-        elif choice == "4":
-            break
-        else:
-            print("Invalid choice")
-
-# command_nav()

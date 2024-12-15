@@ -10,7 +10,7 @@ def menu_serveur():
     while True:
         print("\n--- Menu Serveur ---")
         print("1. Créer une commande")
-        # print("2. Lire les commandes")
+        print("2. Lire les commandes")
         # print("3. Mettre à jour une commande")
         # print("4. Créer un produit")
         # print("5. Lire les produits")
@@ -22,7 +22,7 @@ def menu_serveur():
         if choix == "1":
             print("Création d'une commande")
             print("\n")
-            client = input("nom du client ?")
+            client = input("Nom du client ? ")
             
             Command.save(client, "waiting", 0)
             cursor.execute("SELECT id FROM commands ORDER BY id DESC LIMIT 1")
@@ -40,9 +40,11 @@ def menu_serveur():
                     Command.calculate_total_price(command_id)
                     return False
               
-            
             break
       
+        elif choix == "2":
+            Command.get_commands()
+            
         elif choix == "7":
             print("Retour au menu principal...")
             break
