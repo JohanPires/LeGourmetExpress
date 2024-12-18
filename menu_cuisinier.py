@@ -14,7 +14,7 @@ def menu_cuisinier():
         print("3. Mettre à jour une commande")
         # print("4. Créer un produit")
         print("5. Lire les produits")
-        print("6. Consulter les ingrédients et les stocks")
+        print("6. Consulter/modifier les stocks d'ingrédients")
         print("7. Quitter")
 
         choix = input("Choisissez une option : ")
@@ -41,10 +41,16 @@ def menu_cuisinier():
 
         elif choix == "6":
             Ingredient.get_ingredients()
+            update = input("Souhaitez-vous mettre à jour le stock d'un ingrédient? Oui ou non? ")
+            if update == "oui":
+                ingredient_id = input("Choisissez le numéro de l'ingrédient que vous souhaitez mettre à jour : ")
+                new_stock = input("Quelle est le nouveau stock ? ")
+                Ingredient.update_stock_ingredient(ingredient_id, new_stock)
+
 
         elif choix == "7":
             print("Retour au menu principal...")
             break
-        
+
         else:
             print("Option invalide. Veuillez réessayer.")

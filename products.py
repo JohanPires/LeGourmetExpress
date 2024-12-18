@@ -20,7 +20,6 @@ class Product:
             if(product[1] == 0):
                 print(f'{product[0]}: {product[2]}')
   
-
     def get_one_product(name):
         cursor.execute('SELECT * FROM products WHERE name = %s and custom = 0', (name,))
         resultats = cursor.fetchall()

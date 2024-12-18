@@ -11,12 +11,10 @@ class Ingredient:
         for ingredient in resultats:
             print(f"{ingredient[1]}, stock actuel: {ingredient[2]}")
 
-    def decrement_stock_ingredient(id):
-        cursor.execute("SELECT stock FROM ingredients WHERE id = %s", (id))
-        actual_stock = cursor.fetchall()
-        new_stock = actual_stock - 1
+    def update_stock_ingredient(ingredient_id, new_stock):
         cursor.execute(
-            "UPDATE ingredients SET stock = %s WHERE id = %s", (new_stock, id))
+            "UPDATE ingredients SET stock = %s WHERE id = %s", (new_stock, ingredient_id))
         conn.commit()
+        print("Le stock a bien été mis à jour.")
 
 
