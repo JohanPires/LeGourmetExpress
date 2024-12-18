@@ -9,7 +9,7 @@ class Ingredient:
         cursor.execute('SELECT * FROM ingredients')
         resultats = cursor.fetchall()
         for ingredient in resultats:
-            print(f"{ingredient[1]}, stock actuel: {ingredient[2]}")
+            print(f"{ingredient[0]} : {ingredient[1]}, stock actuel: {ingredient[2]}")
 
     def update_stock_ingredient(ingredient_id, new_stock):
         cursor.execute(
