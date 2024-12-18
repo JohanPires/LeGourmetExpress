@@ -93,12 +93,32 @@ class Command:
             quantity = detail[5]
             print(f" - {quantity} {product_name}")
 
-    def update_command_status(id, status):
+    def update_command_status(command_id, status):
         cursor.execute("""
                        UPDATE commands 
                        SET status = %s 
                        WHERE id = %s""", 
-                       (status, id))
+                       (status, command_id))
         conn.commit()
-        # Si le statut est "ready", decrémenter les stocks de chaque ingrédient
+        # Si le statut est "ready", decrémenter les stocks de chaque ingrédient lié à la commande
+        if status == "ready":
+            Command.decrement_stocks(command_id)
+        
 
+    def decrement_stocks(command_id):
+        cursor.execute("""
+            UPDATE ingredients i
+        JOIN (
+            SELECT pi.ingredients_id,
+                   SUM(cp.quantity) AS qty_to_decrement
+            FROM command_products cp
+            JOIN product_ingredients pi ON cp.product_id = pi.products_id
+            WHERE cp.command_id = %s
+            GROUP BY pi.ingredients_id
+        ) AS subquery ON i.id = subquery.ingredients_id
+        SET i.stock = i.stock - subquery.qty_to_decrement;
+        """, 
+        (command_id,)
+        )
+        conn.commit()
+    
