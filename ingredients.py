@@ -3,38 +3,20 @@ from settings import connect_db
 conn = connect_db()
 cursor = conn.cursor()
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS ingredients (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(50),
-        stock INT
-    );
-            """)
-
 
 class Ingredient:
-    # def init():
-
-
-    # def add_product():
-    #     cursor.execute("""
-    #         INSERT INTO products (name, custom, price)
-    #         VALUES (%s, %s, %s)
-    #         """, ('coca', False, 20))
-    #     conn.commit()
-
     def get_ingredients():
         cursor.execute('SELECT * FROM ingredients')
         resultats = cursor.fetchall()
         for ingredient in resultats:
             print(f"{ingredient[1]}, stock actuel: {ingredient[2]}")
 
-    def update_ingredients(id):
+    def decrement_stock_ingredient(id):
         cursor.execute("SELECT stock FROM ingredients WHERE id = %s", (id))
-        result = cursor.fetchall()
-        new_count = result - 1
+        actual_stock = cursor.fetchall()
+        new_stock = actual_stock - 1
         cursor.execute(
-            "UPDATE ingredients SET stock = %s WHERE id = %s", (new_count, id))
+            "UPDATE ingredients SET stock = %s WHERE id = %s", (new_stock, id))
         conn.commit()
 
 

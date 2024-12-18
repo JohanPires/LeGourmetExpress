@@ -20,32 +20,31 @@ def menu_cuisinier():
         choix = input("Choisissez une option : ")
         if choix == "1":
             Command.get_commands()
+
         elif choix == "2":
             Command.get_waiting_commands()
             command_id = input("Choisissez le numéro de commande que vous souhaitez consulter : ")
             Command.get_one_command_with_products(command_id)
+
         elif choix == "3":
             Command.get_commands()
             command_id = input("Choisissez le numéro de commande que vous souhaitez modifier : ")
             ready = input("Cette commande est-elle prête? Oui ou non? ")
             if ready == "oui":
-                # Appeler une fonction de mise à jour du statut de la commande
                 Command.update_command_status(command_id, "ready")
                 print(f"La commande n°{command_id} a bien été mise à jour.")
+
         elif choix == "5":
             Product.get_products()
             product_id = input("Choisissez le numéro du produit que vous souhaitez consulter : ")
             Product.get_product_with_ingredients(product_id)
-    # update_status = input(
-        # "Indique à tous que tu cuisines ces plats avec le statut 'cooking' : ")
-    # update le status de la commande
-    # récupérer la liste des ingrédients présents dans get_product_with_ingredient
-    # boucle pour la MAJ du stock des ingredients
-    # Ingredient.update_ingredients(id)
+
         elif choix == "6":
             Ingredient.get_ingredients()
+
         elif choix == "7":
             print("Retour au menu principal...")
             break
+        
         else:
             print("Option invalide. Veuillez réessayer.")

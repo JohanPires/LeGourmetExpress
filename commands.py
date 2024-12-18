@@ -100,4 +100,5 @@ class Command:
                        WHERE id = %s""", 
                        (status, id))
         conn.commit()
+        # Si le statut est "ready", decrémenter les stocks de chaque ingrédient
 

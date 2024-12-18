@@ -3,26 +3,6 @@ from settings import connect_db
 conn = connect_db()
 cursor = conn.cursor()
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS products (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        custom BOOLEAN,
-        name VARCHAR(50),
-        price DOUBLE
-    );
-            """)
-
-
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS product_ingredients (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        products_id INT,
-        ingredients_id INT,
-        FOREIGN KEY (products_id) REFERENCES products(id) ON DELETE CASCADE,
-        FOREIGN KEY (ingredients_id) REFERENCES ingredients(id) ON DELETE CASCADE
-    );
-            """)
-
 
 class Product:
        
@@ -70,7 +50,6 @@ class Product:
             """, (id,))
         resultats = cursor.fetchall()
         print(f'Le produit {resultats[0][1]} est constitué de :') 
-        # print(resultats)
         array = resultats[0][4].split(', ')
         
         for ingredient in array : 
