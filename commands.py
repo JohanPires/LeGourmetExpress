@@ -1,6 +1,6 @@
 from settings import connect_db
 from products import Product
-import datetime
+from datetime import date
 
 conn = connect_db()
 cursor = conn.cursor()
@@ -122,3 +122,36 @@ class Command:
         )
         conn.commit()
     
+    def daily_sales_report():
+        current_day = date.today()
+        print(f"\n--- Rapport journalier du {current_day} --- \n")
+        cursor.execute("""
+            SELECT id, total_price, DATE_FORMAT(created_at, "%H:%i")
+            FROM commands
+            WHERE DATE(created_at) = %s
+            ORDER BY id
+        """,
+        (current_day,))
+        commands = cursor.fetchall()
+
+        total_sales = 0
+
+        for command in commands:
+            command_id, total_price, created_at = command
+            total_sales += total_price
+            print(f"Commande passée à {created_at} pour un total de {total_price}€ contenant :")
+            cursor.execute("""
+                SELECT p.name, cp.quantity
+                FROM command_products cp
+                JOIN products p ON cp.product_id = p.id
+                WHERE cp.command_id = %s
+            """, (command_id,))
+            
+            products = cursor.fetchall()
+
+            for product in products:
+                product_name, quantity = product
+                print(f"   - Produit: {product_name}, Quantité: {quantity}")
+            print("\n")
+
+        print(f"Total des ventes pour le {current_day} : {total_sales}€")

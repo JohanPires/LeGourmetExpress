@@ -18,18 +18,19 @@ def menu_serveur():
         print("6. Consulter les ingrédients et les stocks")
         print("7. Quitter")
 
-        choix = input("Choisissez une option : ")
+        choice = input("Choisissez une option : ")
 
-        if choix == "1":
+        if choice == "1":
             print("Création d'une commande")
             print("\n")
             client = input("Nom du client ? ")
             
             Command.save(client, "waiting", 0)
-            cursor.execute("SELECT id FROM commands ORDER BY id DESC LIMIT 1")
-            command_id= int(cursor.fetchone()[0])
             
-            print(f"La commande n°{command_id} a bien été créée.")
+            print(f"La commande a bien été créée.")
+
+            cursor.execute("SELECT id FROM commands ORDER BY id DESC LIMIT 1")
+            command_id = int(cursor.fetchone()[0])
             
             while True:
                 Product.get_products()
@@ -41,20 +42,19 @@ def menu_serveur():
                     Command.calculate_total_price(command_id)
                     return False
               
-            break
       
-        elif choix == "2":
+        elif choice == "2":
             Command.get_commands()
 
-        elif choix == "5":
+        elif choice == "5":
             Product.get_products()
             product_id = input("Choisissez le numéro du produit que vous souhaitez consulter : ")
             Product.get_product_with_ingredients(product_id)
         
-        elif choix == "6":
+        elif choice == "6":
             Ingredient.get_ingredients()
             
-        elif choix == "7":
+        elif choice == "7":
             print("Retour au menu principal...")
             break
         else:
