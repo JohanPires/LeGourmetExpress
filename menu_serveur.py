@@ -12,7 +12,7 @@ def menu_serveur():
         print("\n--- Menu Serveur ---")
         print("1. Créer une commande")
         print("2. Lire les commandes")
-        # print("3. Mettre à jour une commande")
+        print("3. Voir toutes les commandes prêtes et les délivrer au client")
         # print("4. Créer un produit")
         print("5. Lire les produits")
         print("6. Consulter les ingrédients et les stocks")
@@ -45,6 +45,15 @@ def menu_serveur():
       
         elif choice == "2":
             Command.get_commands()
+        
+        elif choice == "3":
+            Command.get_ready_commands()
+            command_id = input("Choisissez le numéro de commande que vous souhaitez modifier : ")
+            collected = input("Souhaitez-vous délivrer cette commande au client? Oui ou non? ")
+            if collected == "oui":
+                Command.update_command_status(command_id, "collected")
+                print("\n")
+                Command.get_one_command_with_products(command_id)
 
         elif choice == "5":
             Product.get_products()

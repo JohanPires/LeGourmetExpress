@@ -57,14 +57,20 @@ class Command:
 
     def get_commands():
         cursor.execute('SELECT * FROM commands')
-        resultats = cursor.fetchall()
-        for command in resultats:
+        results = cursor.fetchall()
+        for command in results:
             print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
 
     def get_waiting_commands():
         cursor.execute('SELECT * FROM commands WHERE status LIKE "waiting"')
-        resultats = cursor.fetchall()
-        for command in resultats:
+        results = cursor.fetchall()
+        for command in results:
+            print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
+
+    def get_ready_commands():
+        cursor.execute('SELECT * FROM commands WHERE status LIKE "ready"')
+        results = cursor.fetchall()
+        for command in results:
             print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
 
     def get_one_command_with_products(id):
@@ -82,16 +88,19 @@ class Command:
             print("Commande non trouvée.")
             return
         
-        print(command_details)
-        print(f"Commande de {command_details[0][0]} passée à {command_details[0][2].strftime("%d/%m/%Y %H:%M")}")
-        print(f"Statut : {command_details[0][1]}")
-        print(f"Prix total : {command_details[0][3]}")
+        print("-------------------------")
+        print(f"Commande de {command_details[0][0]} passée à {command_details[0][2].strftime("%d/%m/%Y %H:%M")}\n")
+        print(f"Statut : {command_details[0][1]}\n")
+
         print("Produits :")
 
         for detail in command_details:
             product_name = detail[4]
             quantity = detail[5]
             print(f" - {quantity} {product_name}")
+        print("\n")
+        print(f"Prix total : {command_details[0][3]}€")
+        print("-------------------------\n")
 
     def update_command_status(command_id, status):
         cursor.execute("""
@@ -100,6 +109,8 @@ class Command:
                        WHERE id = %s""", 
                        (status, command_id))
         conn.commit()
+        print(f"La commande n°{command_id} a bien été mise à jour.")
+
         # Si le statut est "ready", decrémenter les stocks de chaque ingrédient lié à la commande
         if status == "ready":
             Command.decrement_stocks(command_id)
@@ -125,6 +136,8 @@ class Command:
     def daily_sales_report():
         current_day = date.today()
         print(f"\n--- Rapport journalier du {current_day} --- \n")
+
+        # On récupère les commandes du jour
         cursor.execute("""
             SELECT id, total_price, DATE_FORMAT(created_at, "%H:%i")
             FROM commands
@@ -140,6 +153,8 @@ class Command:
             command_id, total_price, created_at = command
             total_sales += total_price
             print(f"Commande passée à {created_at} pour un total de {total_price}€ contenant :")
+
+            # Pour chaque commande, on récupère les produits et quantités associées
             cursor.execute("""
                 SELECT p.name, cp.quantity
                 FROM command_products cp
