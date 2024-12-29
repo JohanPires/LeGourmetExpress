@@ -13,7 +13,7 @@ def menu_cuisinier():
         print("2. Lire le détail d'une commande en cours")
         print("3. Mettre à jour une commande")
         print("4. Créer un produit")
-        print("5. Lire les produits")
+        print("5. Lire le détail d'un produit")
         print("6. Consulter/modifier les stocks d'ingrédients")
         print("7. Rapport journalier des ventes")
         print("8. Quitter")

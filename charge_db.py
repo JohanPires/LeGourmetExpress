@@ -16,7 +16,7 @@ cursor.execute("""
         id INT AUTO_INCREMENT PRIMARY KEY,
         custom BOOLEAN,
         name VARCHAR(50),
-        price DOUBLE
+        price FLOAT
     );
             """)
 
@@ -24,10 +24,10 @@ cursor.execute("""
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS product_ingredients (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        products_id INT,
-        ingredients_id INT,
-        FOREIGN KEY (products_id) REFERENCES products(id) ON DELETE CASCADE,
-        FOREIGN KEY (ingredients_id) REFERENCES ingredients(id) ON DELETE CASCADE
+        product_id INT,
+        ingredient_id INT,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+        FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
     );
             """)
 
@@ -37,7 +37,7 @@ cursor.execute("""
                 client_name VARCHAR(50),
                 status VARCHAR(20),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                total_price DOUBLE
+                total_price FLOAT
             );
             """)
 
@@ -111,54 +111,54 @@ conn.commit()
 
 # Coca-Cola
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (1, 6))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (1, 6))
 conn.commit()
 
 
 # Kebab
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (4, 2))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (4, 2))
 conn.commit()
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (4, 3))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (4, 3))
 conn.commit()
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (4, 4))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (4, 4))
 conn.commit()
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (4, 5))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (4, 5))
 conn.commit()
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (4, 7))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (4, 7))
 conn.commit()
 
 
 # Fanta
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (3, 8))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (3, 8))
 conn.commit()
 
 # Nestea
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (2, 6))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (2, 6))
 conn.commit()
 
 # Frites
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (5, 1))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (5, 1))
 conn.commit()
 
 # Sauce samouraï
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (8, 11))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (8, 11))
 conn.commit()
 
 # Sauce blanche
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (7, 10))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (7, 10))
 conn.commit()
 
 # Sauce algérienne
 
-cursor.execute("INSERT INTO product_ingredients (products_id, ingredients_id) VALUES (%s, %s)", (6, 9))
+cursor.execute("INSERT INTO product_ingredients (product_id, ingredient_id) VALUES (%s, %s)", (6, 9))
 conn.commit()

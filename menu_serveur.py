@@ -34,7 +34,9 @@ def menu_serveur():
             
             while True:
                 Product.get_products()
-                product_id = int(input('Entrer un numéro de produit commandé par le client : '))
+                product_id = int(input('Entrez un numéro de produit commandé par le client ou entrez 0 si le client veut commander un produit personnalisé: '))
+                if product_id == 0:
+                    product_id = Product.create_custom_product()
                 quantity = int(input("Choisissez une quantité : "))
                 Command.add_product_to_command(int(command_id), int(product_id), int(quantity))               
                 add_product = input("Voulez-vous ajouter un produit? Oui ou non?")

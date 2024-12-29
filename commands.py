@@ -129,13 +129,13 @@ class Command:
         cursor.execute("""
             UPDATE ingredients i
             JOIN (
-                SELECT pi.ingredients_id,
+                SELECT pi.ingredient_id,
                     SUM(cp.quantity) AS qty_to_decrement
                 FROM command_products cp
-                JOIN product_ingredients pi ON cp.product_id = pi.products_id
+                JOIN product_ingredients pi ON cp.product_id = pi.product_id
                 WHERE cp.command_id = %s
-                GROUP BY pi.ingredients_id
-            ) AS subquery ON i.id = subquery.ingredients_id
+                GROUP BY pi.ingredient_id
+            ) AS subquery ON i.id = subquery.ingredient_id
             SET i.stock = i.stock - subquery.qty_to_decrement;
             """, 
             (command_id,)
