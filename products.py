@@ -5,37 +5,41 @@ conn = connect_db()
 cursor = conn.cursor()
 
 
-class Product:
-       
+class Product:  
 
-    def get_products():
+    def get_all_products():
         cursor.execute('SELECT * FROM products')
-        resultats = cursor.fetchall()
-        for product in resultats:
-            if(product[1] == 0):
-                print(f'{product[0]}: {product[2]}')
+        results = cursor.fetchall()
+        for product in results:
+            print(f'{product[0]}: {product[2]}')
+    
+    def get_classic_products():
+        cursor.execute('SELECT * FROM products WHERE custom = 0')
+        results = cursor.fetchall()
+        for product in results:
+            print(f'{product[0]}: {product[2]}')
   
     def get_one_product(name):
         cursor.execute('SELECT * FROM products WHERE name = %s', (name,))
-        resultats = cursor.fetchall()
-        for product in resultats:
+        results = cursor.fetchall()
+        for product in results:
             print(product)
 
-    def create_custom_product():
-        name = str(input("Quel sera le nom de ce produit personnalisé? "))
-        price = float(input("Quel sera le prix de ce produit personnalisé? "))
+    def create_product(custom):
+        name = str(input("Quel sera le nom de ce produit? "))
+        price = float(input("Quel sera le prix de ce produit? "))
         cursor.execute("""
             INSERT INTO products (name, custom, price) 
-            VALUES (%s, 1, %s)
-            """, (name, price))
+            VALUES (%s, %s, %s)
+            """, (name, custom, price))
         conn.commit()
         product_id = cursor.lastrowid
         while True:
-            add_ingredient = int(input("Tapez 1 pour ajouter un ingrédient au produit personnalisé, tapez 0 si le produit est déjà complet. "))
+            add_ingredient = int(input("Tapez 1 pour ajouter un ingrédient au produit, tapez 0 si le produit est déjà complet. "))
             if add_ingredient == 1:
                 Product.add_ingredient_to_product(product_id)
             elif add_ingredient == 0:
-                print(f"Le produit personnalisé {name} est complet.\n")
+                print(f"Le produit {name} a bien été créé.\n")
                 return product_id
             else:
                 print("Entrée invalide. Veuillez taper 1 pour ajouter un ingrédient ou 0 pour terminer.")
@@ -64,9 +68,9 @@ class Product:
             WHERE p.id = %s
             GROUP BY p.id, p.name, p.custom, p.price
             """, (id,))
-        resultats = cursor.fetchall()
-        print(f'Le produit {resultats[0][1]} est constitué de :') 
-        array = resultats[0][4].split(', ')
+        results = cursor.fetchall()
+        print(f'Le produit {results[0][1]} est constitué de :') 
+        array = results[0][4].split(', ')
         
         for ingredient in array : 
-            print(ingredient)
+            print(f"- {ingredient}")

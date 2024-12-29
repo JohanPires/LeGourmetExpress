@@ -6,8 +6,8 @@ def principal():
     while True:
         print("\n--- Menu Principal ---")
         print("1. Serveur")
-        print("2. Cuisinier")
-        print("3. Quitter")
+        print("2. Chef")
+        print("3. Quitter\n")
 
         choix = input("Choisissez une option : ")
 

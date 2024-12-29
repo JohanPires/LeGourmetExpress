@@ -54,6 +54,8 @@ class Command:
             VALUES (%s, %s, %s)
             """, (client_name, status, total_price))
         conn.commit()
+        command_id = cursor.lastrowid
+        return command_id
 
     def get_commands():
         cursor.execute('SELECT * FROM commands')
