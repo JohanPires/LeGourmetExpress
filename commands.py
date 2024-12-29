@@ -70,6 +70,11 @@ class Command:
     def get_ready_commands():
         cursor.execute('SELECT * FROM commands WHERE status LIKE "ready"')
         results = cursor.fetchall()
+
+        if not results:
+            print("Aucune commande n'est prête à être délivrée.")
+            return
+
         for command in results:
             print(f"Commande n°{command[0]} pour {command[1]} passée à {command[3].strftime("%d/%m/%Y %H:%M")}. Statut {command[2]}.")
 
@@ -83,34 +88,38 @@ class Command:
             """, (id,))
         
         command_details = cursor.fetchall()
-    
-        if not command_details:
-            print("Commande non trouvée.")
-            return
-        
+            
         print("-------------------------")
-        print(f"Commande de {command_details[0][0]} passée à {command_details[0][2].strftime("%d/%m/%Y %H:%M")}\n")
-        print(f"Statut : {command_details[0][1]}\n")
+        if command_details:
+            print(f"Commande de {command_details[0][0]} passée à {command_details[0][2].strftime("%d/%m/%Y %H:%M")}\n")
+            print(f"Statut : {command_details[0][1]}\n")
 
-        print("Produits :")
+            print("Produits :")
 
-        for detail in command_details:
-            product_name = detail[4]
-            quantity = detail[5]
-            print(f" - {quantity} {product_name}")
-        print("\n")
-        print(f"Prix total : {command_details[0][3]}€")
+            for detail in command_details:
+                product_name = detail[4]
+                quantity = detail[5]
+                print(f" - {quantity} {product_name}")
+            print("\n")
+            print(f"Prix total : {command_details[0][3]}€")
+        else:
+            print("Commande non trouvée.")
         print("-------------------------\n")
 
     def update_command_status(command_id, status):
         cursor.execute("""
-                       UPDATE commands 
-                       SET status = %s 
-                       WHERE id = %s""", 
-                       (status, command_id))
+                    UPDATE commands 
+                    SET status = %s 
+                    WHERE id = %s""", 
+                    (status, command_id))
         conn.commit()
-        print(f"La commande n°{command_id} a bien été mise à jour.")
 
+        # Vérifier le nombre de lignes affectées par la requête
+        if cursor.rowcount == 0:
+            print(f"La commande n° {command_id} n'a pas été trouvée.")
+        else:
+            print(f"La commande n°{command_id} a bien été mise à jour.")
+        
         # Si le statut est "ready", decrémenter les stocks de chaque ingrédient lié à la commande
         if status == "ready":
             Command.decrement_stocks(command_id)

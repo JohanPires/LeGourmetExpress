@@ -48,12 +48,10 @@ def menu_serveur():
         
         elif choice == "3":
             Command.get_ready_commands()
-            command_id = input("Choisissez le numéro de commande que vous souhaitez modifier : ")
-            collected = input("Souhaitez-vous délivrer cette commande au client? Oui ou non? ")
-            if collected == "oui":
-                Command.update_command_status(command_id, "collected")
-                print("\n")
-                Command.get_one_command_with_products(command_id)
+            command_id = input("Choisissez le numéro de commande que vous souhaitez délivrer au client : ")
+            Command.update_command_status(command_id, "collected")
+            print("\n")
+            Command.get_one_command_with_products(command_id)
 
         elif choice == "5":
             Product.get_products()
