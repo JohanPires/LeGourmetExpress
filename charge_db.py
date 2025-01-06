@@ -44,9 +44,9 @@ cursor.execute("""
 cursor.execute("""
             CREATE TABLE IF NOT EXISTS command_products (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            command_id INT,
-            product_id INT,
-            quantity INT
+            quantity INT,
+            FOREIGN KEY (command_id) REFERENCES commands(id) ON DELETE CASCADE,
+            FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
         );
 """)
 
