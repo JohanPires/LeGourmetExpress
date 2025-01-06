@@ -20,6 +20,15 @@ cursor.execute("""
     );
             """)
 
+cursor.execute("""
+            CREATE TABLE commands (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                client_name VARCHAR(50),
+                status VARCHAR(20),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                total_price FLOAT
+            );
+            """)
 
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS product_ingredients (
@@ -32,19 +41,11 @@ cursor.execute("""
             """)
 
 cursor.execute("""
-            CREATE TABLE commands (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                client_name VARCHAR(50),
-                status VARCHAR(20),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                total_price FLOAT
-            );
-            """)
-
-cursor.execute("""
             CREATE TABLE IF NOT EXISTS command_products (
             id INT AUTO_INCREMENT PRIMARY KEY,
             quantity INT,
+            command_id INT,
+            product_id INT,
             FOREIGN KEY (command_id) REFERENCES commands(id) ON DELETE CASCADE,
             FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
         );
